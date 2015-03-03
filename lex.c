@@ -107,6 +107,7 @@ int main(int argc, char const *argv[])
 					break;
 					}
 				break;
+			//add other operators and symbols	
 			case ';' :
 				printf('TK_Delimiter');
 				break;
