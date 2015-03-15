@@ -1,119 +1,196 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-char* lookup(char *word)
-{
-	char *token;
-	//search hash table and print/output token
-
-return token; 
-}
-
-int isAlpha(char ch)
-{
-	if(ch>=60 && ch<=90 || ch>=97 && ch<=122)
+#include <math.h>
+char word[100];
+int isAlpha(char ch){
+	if((ch>='a' && ch<='z') || (ch>='A' && ch<='Z') )
 		return 1;
-	else 
+	else
 		return 0;
 }
-
-
 int isNum(char ch)
 {
-	if(ch>90 && ch<=121)
+	if((ch>='0' && ch<='9'))
 		return 1;
-	else 
+	else
 		return 0;
 }
+
+void print_word(int len){
+	int i;
+	for (i = 0; i <len; ++i)
+	{
+		printf("%c",word[i]);
+	}
+	printf(" ");
+}
+
+
 
 int main(int argc, char const *argv[])
 {
-	/* code */
+	int x;
 	
-	int state=0;
-	int x=0;
-	char ch=getc(stdin);
-	char* word = (char*) malloc(sizeof(int)*10);
-	word[x++] = ch;
-	while(ch!=' ')
+	x=0;
+	char ch=getchar();
+	while(1)
 	{
-		if(ch.isAlpha())
-			{
-			word[x++] = ch;			
-			while(ch.isAlpha() || ch.isNum() )
-				{
-			
-				word[x++] = ch;			
-				ch=getc(stdin);
-	
-				}
-
-				lookup(word);
-			}
-		else if (ch.isNum())
-		{
-			word[x++] = ch;			
-			while(ch.isNum())
-				{
-			
-				word[x++] = ch;			
-				ch=getc(stdin);
-				
-				}
-
-				if (ch.isAlpha())
-				{
-					//print error as variable cannot be 123abc type
-				}
-
+		if(ch=='7')break;
+		x=0;
+		if(ch==' ' || ch=='\n' || ch=='\t'){
+			ch=getchar();
+			continue;
 		}
-	else
+		if(isAlpha(ch)){
+			while(isAlpha(ch) || isNum(ch) )
+			{
+				word[x++]=ch;			
+				ch=getchar();
+			}
+			print_word(x);
+			printf("\n");
+			continue;
+		}
+		else if(isNum(ch))
 		{
-		switch (ch){
+			x=0;
+			while(isNum(ch))
+			{	
+				word[x++] = ch;			
+				ch=getchar();	
+			}
+			print_word(x);
+			printf("\n");
+			continue;
+		}
 
-			case '<' :
-				ch=getch();
-				switch (ch)
+		else if(ch=='{' || ch=='}' || 
+				ch=='[' || ch==']' || 
+				ch==';' || ch=='(' ||
+				ch==')' || ch==34  ||
+				ch==39	|| ch==',' ||
+				ch=='%' || ch=='#' 
+
+			)
+		{
+			printf("TK_%c\n",ch);
+			ch=getchar();
+			continue;	
+		}
+		else
+		{
+			switch (ch)
+			{
+				case '=':
+					ch=getchar();
+					switch (ch)
 					{
-					case '=' :
-					printf('less than equal');
-					break;
-					case ' ' :
-					printf('less than');
-					break;
+						case '=' :
+							printf("TK_==\n");
+							break;
+						default:
+							printf("TK==\n");
+							break;
 					}
-				break;
-			case '>' :
-				ch=getch();
-				switch (ch)
+					break;
+				case '<':
+					ch=getchar();
+					switch (ch)
 					{
-					case '=' :
-					printf('greater than equal');
-					break;
-					case ' ' :
-					printf('greater than');
-					break;
+						case '=' :
+							printf("less than equal\n");
+							break;
+						default:
+							printf("less than\n");
+							break;
 					}
-				break;
-			case '!' :
-				ch=getch();
-				switch (ch)
+					break;
+				
+				case '>' :
+					ch=getchar();
+					switch (ch)
 					{
-					case '=' :
-					printf('not equal');
-					break;
-					case ' ' :
-					printf('not');
-					break;
+						case '=' :
+							printf("greater than equal\n");
+							break;
+						default:
+						printf("greater than\n");
+						break;
 					}
-				break;
-			//add other operators and symbols	
-			case ';' :
-				printf('TK_Delimiter');
-				break;
-				}
+					break;
+				case '!' :
+					ch=getchar();
+					switch (ch)
+					{
+						case '=' :
+							printf("not equal\n");
+						break;
+						default:
+							printf("not\n");
+							break;
+					}
+					break;
+				case '+' :
+					ch=getchar();
+					switch (ch)
+					{
+						case '+' :
+							printf("TK++\n");
+						break;
+						default:
+							printf("simple+\n");
+							break;
+					}
+					break;	
+
+				case '-' :
+					ch=getchar();
+					switch (ch)
+					{
+						case '-' :
+							printf("TK--\n");
+						break;
+						default:
+							printf("simple-\n");
+							break;
+					}
+					break;	
+				case '*' :
+					printf("TK_*\n");
+					break;
+					
+				case '/' :
+					printf("TK_/\n");
+					break;
+				case '|' :
+					ch=getchar();
+					switch (ch)
+					{
+						case '|' :
+							printf("TK_|\n");
+						break;
+						default:
+							printf("simple_|\n");
+							break;
+					}
+					break;	
+
+				case '&' :
+					ch=getchar();
+					switch (ch)
+					{
+						case '&' :
+							printf("TK_&&\n");
+						break;
+						default:
+							printf("simple_&\n");
+							break;
+					}
+					break;	
+				
+			}
+			ch=getchar();
 		}
 	}
-
 	return 0;
 }

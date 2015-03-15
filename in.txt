@@ -1,0 +1,14 @@
+
+int main(int a,int b){
+	
+	int x,y,z;
+
+	for(int i=0;i<n;i++){
+	a[x]++;
+	}
+	if(a==b)
+	return 0;
+
+
+}
+7
